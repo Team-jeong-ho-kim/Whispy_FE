@@ -10,9 +10,10 @@ jobs:
     steps:
       - name: Send PR info to Discord
         uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
+          args: |
             🔔 새 Pull Request 생성됨!
             🧑‍💻 작성자: ${{ github.actor }}
             📄 제목: ${{ github.event.pull_request.title }}
