@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import Splash from "@/screens/Splash";
 
 export default function Index() {
-  return (
-    <View>
-      <Text>Welcome to Whispy</Text>
-    </View>
-  );
+  return <Splash />;
 }
