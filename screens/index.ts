@@ -1,1 +1,2 @@
-export { default } from "./Splash";
+export { default as Home } from "./Home";
+export { default as Splash } from "./Splash";

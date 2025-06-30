@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import Home from "./Home";
 
 const { width } = Dimensions.get("window");
 
@@ -23,8 +24,7 @@ export default function Splash() {
   }, []);
 
   if (!isLoading) {
-    // 메인 화면 컴포넌트로 교체
-    return null; // 임시
+    return <Home />;
   }
 
   return (
