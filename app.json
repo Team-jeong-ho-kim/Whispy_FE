@@ -20,6 +20,7 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "assetBundlePatterns": ["assets/fonts/*"]
   }
 }
