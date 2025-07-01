@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
   musicPlayerContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 10,
-    padding: 20,
-    marginBottom: 50,
+    padding: 10,
+    marginBottom: "30%",
     borderWidth: 0.5,
     borderColor: "rgba(255, 255, 255, 0.2)",
     width: "98%",
