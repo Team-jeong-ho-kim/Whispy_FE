@@ -1,38 +1,37 @@
 import { backIcon, nextIcon, playIcon, stopIcon } from "@/assets";
-import React, { useState } from "react";
+import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-interface Track {
-  id: number;
-  title: string;
-}
+import { Track } from "../api/types";
 
 interface MusicPlayerProps {
   currentTrack?: Track;
-  onPlayPause?: (isPlaying: boolean) => void;
+  isPlaying?: boolean;
+  loading?: boolean;
+  onPlayPause?: () => void;
   onPrevious?: () => void;
   onNext?: () => void;
 }
 
 export default function MusicPlayer({
   currentTrack,
+  isPlaying = false,
+  loading = false,
   onPlayPause,
   onPrevious,
   onNext,
 }: MusicPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-
   const defaultTrack = {
     id: 0,
-    title: "Select a song to play",
+    name: "Select a song to play",
+    theme: "",
+    s3Url: "",
+    createdAt: "",
   };
 
   const displayTrack = currentTrack || defaultTrack;
 
   const handlePlayPause = () => {
-    const newPlayingState = !isPlaying;
-    setIsPlaying(newPlayingState);
-    onPlayPause?.(newPlayingState);
+    onPlayPause?.();
   };
 
   const handlePrevious = () => {
@@ -45,7 +44,7 @@ export default function MusicPlayer({
 
   return (
     <View style={styles.musicPlayerContainer}>
-      <Text style={styles.songTitle}>{displayTrack.title}</Text>
+      <Text style={styles.songTitle}>{displayTrack.name}</Text>
 
       <View style={styles.controlsContainer}>
         <TouchableOpacity style={styles.controlButton} onPress={handlePrevious}>
@@ -55,6 +54,7 @@ export default function MusicPlayer({
             resizeMode="contain"
           />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={handlePlayPause}>
           <Image
             source={isPlaying ? stopIcon : playIcon}
@@ -62,6 +62,7 @@ export default function MusicPlayer({
             resizeMode="contain"
           />
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.controlButton} onPress={handleNext}>
           <Image
             source={nextIcon}

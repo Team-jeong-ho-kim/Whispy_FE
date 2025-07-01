@@ -1,10 +1,6 @@
+import { Track } from "@/api/types";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-interface Track {
-  id: number;
-  title: string;
-}
 
 interface TrackItemProps {
   track: Track;
@@ -20,7 +16,7 @@ export default function TrackItem({
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
-    console.log("TrackItem pressed:", track.title);
+    console.log("TrackItem pressed:", track.name);
     setIsSelected(!isSelected);
     onPress();
   };
@@ -38,7 +34,7 @@ export default function TrackItem({
           />
         </View>
         <View style={styles.trackInfo}>
-          <Text style={styles.trackTitle}>{track.title}</Text>
+          <Text style={styles.trackTitle}>{track.name}</Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -1,3 +1,4 @@
+import { Track } from "@/api/types";
 import { BackgroundImg } from "@/assets";
 import React, { useEffect, useRef } from "react";
 import {
@@ -11,20 +12,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSoundsByTheme } from "../hooks/useSounds";
 import TrackItem from "./TrackItem";
 
 const { width, height } = Dimensions.get("window");
-
-interface Track {
-  id: number;
-  title: string;
-}
 
 interface TrackListScreenProps {
   visible: boolean;
   themeName: string;
   themeIcon: any;
-  tracks: Track[];
+  apiTheme: string | null;
   onTrackPress: (track: Track) => void;
   onClose: () => void;
 }
@@ -33,11 +30,12 @@ export default function TrackListScreen({
   visible,
   themeName,
   themeIcon,
-  tracks,
+  apiTheme,
   onTrackPress,
   onClose,
 }: TrackListScreenProps) {
   const slideAnim = useRef(new Animated.Value(height * 0.75)).current;
+  const { tracks, loading, error } = useSoundsByTheme(apiTheme);
 
   useEffect(() => {
     if (visible) {
@@ -69,12 +67,7 @@ export default function TrackListScreen({
     >
       <View style={styles.overlay}>
         <Animated.View
-          style={[
-            styles.container,
-            {
-              transform: [{ translateY: slideAnim }],
-            },
-          ]}
+          style={[styles.container, { transform: [{ translateY: slideAnim }] }]}
         >
           <ImageBackground
             source={BackgroundImg}
@@ -93,25 +86,31 @@ export default function TrackListScreen({
               </View>
 
               <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>{tracks.length}곡</Text>
+                <Text style={styles.sectionTitle}>
+                  {loading ? "로딩 중..." : `${tracks.length}곡`}
+                </Text>
               </View>
 
-              <ScrollView
-                style={styles.trackList}
-                contentContainerStyle={styles.trackListContent}
-                showsVerticalScrollIndicator={false}
-                bounces={true}
-                nestedScrollEnabled={true}
-              >
-                {tracks.map((track) => (
-                  <TrackItem
-                    key={track.id}
-                    track={track}
-                    themeIcon={themeIcon}
-                    onPress={() => onTrackPress(track)}
-                  />
-                ))}
-              </ScrollView>
+              {error ? (
+                <Text style={styles.errorText}>{error}</Text>
+              ) : (
+                <ScrollView
+                  style={styles.trackList}
+                  contentContainerStyle={styles.trackListContent}
+                  showsVerticalScrollIndicator={false}
+                  bounces={true}
+                  nestedScrollEnabled={true}
+                >
+                  {tracks.map((track) => (
+                    <TrackItem
+                      key={track.id}
+                      track={track}
+                      themeIcon={themeIcon}
+                      onPress={() => onTrackPress(track)}
+                    />
+                  ))}
+                </ScrollView>
+              )}
             </View>
           </ImageBackground>
         </Animated.View>
@@ -191,5 +190,11 @@ const styles = StyleSheet.create({
   trackListContent: {
     paddingBottom: 140,
     minHeight: "100%",
+  },
+  errorText: {
+    color: "#FF6B6B",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
   },
 });

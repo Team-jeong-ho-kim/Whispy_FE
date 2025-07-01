@@ -8,19 +8,44 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app uses audio playback.",
+        "UIBackgroundModes": ["audio"],
+        "AVAudioSessionCategoryPlayback": true
+      }
     },
     "android": {
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "RECORD_AUDIO",
+        "FOREGROUND_SERVICE",
+        "WAKE_LOCK",
+        "ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     },
-    "assetBundlePatterns": ["assets/fonts/*"]
+    "assetBundlePatterns": ["assets/fonts/*"],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d5db8d29-109b-412b-9a1d-9d7f14456c32"
+      }
+    }
   }
 }
