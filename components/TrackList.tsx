@@ -65,56 +65,62 @@ export default function TrackListScreen({
       onRequestClose={handleClose}
       statusBarTranslucent={true}
     >
-      <View style={styles.overlay}>
+      <TouchableOpacity
+        style={styles.overlay}
+        activeOpacity={1}
+        onPress={handleClose}
+      >
         <Animated.View
           style={[styles.container, { transform: [{ translateY: slideAnim }] }]}
         >
-          <ImageBackground
-            source={BackgroundImg}
-            style={styles.backgroundImage}
-            resizeMode="cover"
-          >
-            <View style={styles.content}>
-              <View style={styles.header}>
-                <TouchableOpacity
-                  style={styles.backButton}
-                  onPress={handleClose}
-                >
-                  <Text style={styles.backButtonText}>←</Text>
-                </TouchableOpacity>
-                <Text style={styles.themeTitle}>{themeName}</Text>
-              </View>
+          <TouchableOpacity activeOpacity={1} style={{ flex: 1 }}>
+            <ImageBackground
+              source={BackgroundImg}
+              style={styles.backgroundImage}
+              resizeMode="cover"
+            >
+              <View style={styles.content}>
+                <View style={styles.header}>
+                  <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={handleClose}
+                  >
+                    <Text style={styles.backButtonText}>←</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.themeTitle}>{themeName}</Text>
+                </View>
 
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>
-                  {loading ? "로딩 중..." : `${tracks.length}곡`}
-                </Text>
-              </View>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>
+                    {loading ? "로딩 중..." : `${tracks.length}곡`}
+                  </Text>
+                </View>
 
-              {error ? (
-                <Text style={styles.errorText}>{error}</Text>
-              ) : (
-                <ScrollView
-                  style={styles.trackList}
-                  contentContainerStyle={styles.trackListContent}
-                  showsVerticalScrollIndicator={false}
-                  bounces={true}
-                  nestedScrollEnabled={true}
-                >
-                  {tracks.map((track) => (
-                    <TrackItem
-                      key={track.id}
-                      track={track}
-                      themeIcon={themeIcon}
-                      onPress={() => onTrackPress(track)}
-                    />
-                  ))}
-                </ScrollView>
-              )}
-            </View>
-          </ImageBackground>
+                {error ? (
+                  <Text style={styles.errorText}>{error}</Text>
+                ) : (
+                  <ScrollView
+                    style={styles.trackList}
+                    contentContainerStyle={styles.trackListContent}
+                    showsVerticalScrollIndicator={false}
+                    bounces={true}
+                    nestedScrollEnabled={true}
+                  >
+                    {tracks.map((track) => (
+                      <TrackItem
+                        key={track.id}
+                        track={track}
+                        themeIcon={themeIcon}
+                        onPress={() => onTrackPress(track)}
+                      />
+                    ))}
+                  </ScrollView>
+                )}
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
         </Animated.View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 }
@@ -122,7 +128,6 @@ export default function TrackListScreen({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    height: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   container: {
