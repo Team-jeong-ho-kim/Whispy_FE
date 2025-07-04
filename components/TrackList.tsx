@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   trackListContent: {
-    paddingBottom: 140,
+    paddingBottom: 200,
     minHeight: "100%",
   },
   errorText: {
